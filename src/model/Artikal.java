@@ -1,24 +1,14 @@
 package model;
 
-public class Artikal {
+public class Artikal extends IdentifiableClass {
 	
-	private Long id;
 	private String naziv;
 	private double cena;
 	
 	public Artikal(Long id, String naziv, double cena) {
-		super();
-		this.id = id;
+		super(id);
 		this.naziv = naziv;
 		this.cena = cena;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNaziv() {
@@ -36,6 +26,5 @@ public class Artikal {
 	public void setCena(double cena) {
 		this.cena = cena;
 	}
-	
 
 }

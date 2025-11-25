@@ -1,43 +1,33 @@
 package model;
 
-public class StavkaKupovine {
+public class StavkaKupovine extends IdentifiableClass {
 	
-	private Long id;
-	private Kupovina kupovinaId;
-	private Artikal artikalId;
+	private Long kupovinaId;
+	private Long artikalId;
 	private int kolicina;
 	private double jedicnaCena;
 	
-	public StavkaKupovine(Long id, Kupovina kupovinaId, Artikal artikalId, int kolicina, double jedicnaCena) {
-		super();
-		this.id = id;
+	public StavkaKupovine(Long id, Long kupovinaId, Long artikalId, int kolicina, double jedicnaCena) {
+		super(id);
 		this.kupovinaId = kupovinaId;
 		this.artikalId = artikalId;
 		this.kolicina = kolicina;
 		this.jedicnaCena = jedicnaCena;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Kupovina getKupovinaId() {
+	public Long getKupovinaId() {
 		return kupovinaId;
 	}
 
-	public void setKupovinaId(Kupovina kupovinaId) {
+	public void setKupovinaId(Long kupovinaId) {
 		this.kupovinaId = kupovinaId;
 	}
 
-	public Artikal getArtikalId() {
+	public Long getArtikalId() {
 		return artikalId;
 	}
 
-	public void setArtikalId(Artikal artikalId) {
+	public void setArtikalId(Long artikalId) {
 		this.artikalId = artikalId;
 	}
 
@@ -57,5 +47,4 @@ public class StavkaKupovine {
 		this.jedicnaCena = jedicnaCena;
 	}
 	
-
 }
