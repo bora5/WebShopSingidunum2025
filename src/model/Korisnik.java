@@ -26,6 +26,11 @@ public class Korisnik extends IdentifiableClass {
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
 	}
+	
+	@Override
+	public String toString() {
+		return "ID: %d, ime: %s, prezime: %s".formatted(getId(), ime, prezime);
+	}
 
 	
 }
