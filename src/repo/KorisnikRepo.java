@@ -53,7 +53,7 @@ public class KorisnikRepo {
 
 		String sql = "INSERT INTO korisnik (ime, prezime) VALUES (?, ?)";
 
-		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
 			pst.setString(1, k.getIme());
 			pst.setString(2, k.getPrezime());
@@ -73,5 +73,39 @@ public class KorisnikRepo {
 		}
 		return null;
 	}
-
+	
+	public Korisnik update(Korisnik k) {
+		
+		String sql = "UPDATE korisnik SET ime = ?, prezime = ? WHERE id = ?";
+		
+		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+			
+			pst.setString(1, k.getIme());
+			pst.setString(2, k.getPrezime());
+			pst.setLong(3, k.getId());
+			
+			pst.executeUpdate();
+			
+			return k;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public void delete(Long id) {
+		
+		String sql = "DELETE FROM korisnik WHERE id = ?";
+		
+		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+			pst.setLong(1, id);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
