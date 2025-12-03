@@ -1,6 +1,8 @@
 package service;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,14 +14,19 @@ import repo.KorisnikRepo;
 
 public class KorisnikService implements HttpHandler {
 
-	private KorisnikRepo repo = new KorisnikRepo();
+	private KorisnikRepo repo;
+	
+	public KorisnikService() {
+		repo = new KorisnikRepo();
+	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
 		switch(exchange.getRequestMethod()) {
 		case "GET":
-
+			List<Korisnik> list = repo.findAll();
+			sendResponse(exchange, 200, toJSONArray(list));
 			break;
 		case "POST":
 
@@ -94,5 +101,14 @@ public class KorisnikService implements HttpHandler {
 			return null;
 		}
 	}
+	
+	private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
+        byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
+        exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+        exchange.sendResponseHeaders(statusCode, bytes.length);
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(bytes);
+        }
+    }
 
 }
