@@ -84,9 +84,13 @@ public class KorisnikRepo {
 			pst.setString(2, k.getPrezime());
 			pst.setLong(3, k.getId());
 			
-			pst.executeUpdate();
+			var res = pst.executeUpdate();
 			
-			return k;
+			if (res > 0) 
+				return k;
+			else
+				return null;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -94,17 +98,24 @@ public class KorisnikRepo {
 		return null;
 	}
 	
-	public void delete(Long id) {
+	public Boolean delete(Long id) {
 		
 		String sql = "DELETE FROM korisnik WHERE id = ?";
 		
 		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
 			pst.setLong(1, id);
 			
-			pst.executeUpdate();
+			var res = pst.executeUpdate();
+			
+			if (res > 0) 
+				return true;
+			else
+				return false;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return null;
 		
 	}
 	

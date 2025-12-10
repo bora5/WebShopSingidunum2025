@@ -21,7 +21,6 @@ public class WebShop {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
+	
 }
