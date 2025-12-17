@@ -21,7 +21,7 @@ public class KorisnikRepo {
 
 		try(Connection conn = DBUtils.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 			while(rs.next()) {
-				Korisnik temp = new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3));
+				Korisnik temp = new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 				list.add(temp);
 			}
 		} catch (SQLException e) {
@@ -39,7 +39,46 @@ public class KorisnikRepo {
 			pst.setLong(1, id);
 			try (ResultSet rs = pst.executeQuery()) {
 				if (rs.next()) {
-					return new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3)); 
+					return new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)); 
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Korisnik findByKorisnickoIme(String ki) {
+
+		String sql = "SELECT * FROM korisnik WHERE korisnicko_ime = ?";
+
+		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+
+			pst.setString(1, ki);
+			try (ResultSet rs = pst.executeQuery()) {
+				if (rs.next()) {
+					return new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)); 
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Korisnik proveriKredencijale(String ki, String loz) {
+
+		String sql = "SELECT * FROM korisnik WHERE korisnicko_ime = ? AND lozinka = ?";
+
+		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
+
+			pst.setString(1, ki);
+			pst.setString(2, loz);
+			try (ResultSet rs = pst.executeQuery()) {
+				if (rs.next()) {
+					return new Korisnik(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)); 
 				}
 			}
 
@@ -51,12 +90,14 @@ public class KorisnikRepo {
 
 	public Korisnik create(Korisnik k) {
 
-		String sql = "INSERT INTO korisnik (ime, prezime) VALUES (?, ?)";
+		String sql = "INSERT INTO korisnik (ime, prezime, korisnicko_ime, lozinka) VALUES (?, ?, ?, ?)";
 
 		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
 			pst.setString(1, k.getIme());
 			pst.setString(2, k.getPrezime());
+			pst.setString(3, k.getKorisnickoIme());
+			pst.setString(4, k.getLozinka());
 
 			int affectedRows = pst.executeUpdate();
 
@@ -76,12 +117,14 @@ public class KorisnikRepo {
 	
 	public Korisnik update(Korisnik k) {
 		
-		String sql = "UPDATE korisnik SET ime = ?, prezime = ? WHERE id = ?";
+		String sql = "UPDATE korisnik SET ime = ?, prezime = ?, korisnicko_ime = ?, lozinka = ? WHERE id = ?";
 		
 		try(Connection conn = DBUtils.getConnection(); PreparedStatement pst = conn.prepareStatement(sql);) {
 			
 			pst.setString(1, k.getIme());
 			pst.setString(2, k.getPrezime());
+			pst.setString(3, k.getKorisnickoIme());
+			pst.setString(4, k.getLozinka());
 			pst.setLong(3, k.getId());
 			
 			var res = pst.executeUpdate();

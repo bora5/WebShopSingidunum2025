@@ -11,7 +11,7 @@ public class KorisnikRepoTest {
 		
 		kr.findAll().stream().forEach(k -> System.out.println(k));
 		
-		Korisnik temp = new Korisnik(null, "Test1", "Test1");
+		Korisnik temp = new Korisnik(null, "Test1", "Test1", "username", "password");
 		
 		temp = kr.create(temp);
 		

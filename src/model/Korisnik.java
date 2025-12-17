@@ -4,11 +4,15 @@ public class Korisnik extends IdentifiableClass {
 	
 	private String ime;
 	private String prezime;
+	private String korisnickoIme;
+	private String lozinka;
 	
-	public Korisnik(Long id, String ime, String prezime) {
+	public Korisnik(Long id, String ime, String prezime, String korisnickoIme, String lozinka) {
 		super(id);
 		this.ime = ime;
 		this.prezime = prezime;
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
 	}
 
 	public String getIme() {
@@ -27,6 +31,22 @@ public class Korisnik extends IdentifiableClass {
 		this.prezime = prezime;
 	}
 	
+	public String getKorisnickoIme() {
+		return korisnickoIme;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+
+	public String getLozinka() {
+		return lozinka;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+
 	@Override
 	public String toString() {
 		return "ID: %d, ime: %s, prezime: %s".formatted(getId(), ime, prezime);

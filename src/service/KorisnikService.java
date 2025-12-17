@@ -130,9 +130,10 @@ public class KorisnikService implements HttpHandler {
 				{
 				"id":%d,
 				"ime":"%s",
-				"prezime":"%s"
+				"prezime":"%s",
+				"korisnickoIme":"%s"
 				}
-				""".formatted(k.getId(), k.getIme(), k.getPrezime());
+				""".formatted(k.getId(), k.getIme(), k.getPrezime(), k.getKorisnickoIme());
 	}
 
 	private String toJSONArray(List<Korisnik> list) {
@@ -163,6 +164,8 @@ public class KorisnikService implements HttpHandler {
 			Long id = null;
 			String ime = null;
 			String prezime = null;
+			String korisnickoIme = null;
+			String lozinka = null;
 
 			for (String pair: pairs) {
 				String[] keyValue = pair.split(":");
@@ -181,8 +184,12 @@ public class KorisnikService implements HttpHandler {
 					ime = value;
 				else if("prezime".equals(key))
 					prezime = value;
+				else if("korisnickoIme".equals(key))
+					korisnickoIme = value;
+				else if("lozinka".equals(key))
+					lozinka = value;
 			}
-			return new Korisnik(id, ime, prezime);
+			return new Korisnik(id, ime, prezime, korisnickoIme, lozinka);
 		} catch (Exception e) {
 			return null;
 		}
