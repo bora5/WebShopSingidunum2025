@@ -79,7 +79,7 @@ public class JwtUtil {
 	}
 
 	private static String base64EncodeURL(String header) {
-		return Base64.getUrlEncoder().withoutPadding().encodeToString(SECRET.getBytes(StandardCharsets.UTF_8));
+		return Base64.getUrlEncoder().withoutPadding().encodeToString(header.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static String hmacSHA256(String dataToSign) throws NoSuchAlgorithmException, InvalidKeyException {
